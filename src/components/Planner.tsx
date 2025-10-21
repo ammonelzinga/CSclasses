@@ -88,6 +88,7 @@ export default function Planner(){
   })
   const [newName, setNewName] = useState('')
   const [warningToast, setWarningToast] = useState<string | null>(null)
+  const [successToast, setSuccessToast] = useState<string | null>(null)
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(semesters))
@@ -114,6 +115,10 @@ export default function Planner(){
     const blob = new Blob([data], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     window.open(url)
+    if (ciFlags.uiRedesign) {
+      setSuccessToast('Plan exported successfully!')
+      setTimeout(() => setSuccessToast(null), 3000)
+    }
   }
 
   function importPlan(ev: React.ChangeEvent<HTMLInputElement>){
@@ -124,7 +129,16 @@ export default function Planner(){
       try{
         const parsed = JSON.parse(String(reader.result))
         setSemesters(parsed)
-      }catch{}
+        if (ciFlags.uiRedesign) {
+          setSuccessToast('Plan imported successfully!')
+          setTimeout(() => setSuccessToast(null), 3000)
+        }
+      }catch{
+        if (ciFlags.uiRedesign) {
+          setWarningToast('Failed to import plan. Please check the file format.')
+          setTimeout(() => setWarningToast(null), 5000)
+        }
+      }
     }
     reader.readAsText(file)
   }
@@ -220,11 +234,11 @@ export default function Planner(){
       </div>
 
       <div className="planner-layout">
-        <div className="planner-available">
-          <h3>Available Courses</h3>
-          <div style={{ maxHeight: 700, overflow: 'auto' }}>
+        <section className="planner-available" aria-labelledby="available-courses-heading">
+          <h3 id="available-courses-heading">Available Courses</h3>
+          <div style={{ maxHeight: 700, overflow: 'auto' }} role="list" aria-label="Available courses to add to semesters">
             {courses.map(c => (
-              <div key={c.code} className="card" draggable onDragStart={e => handleDragStart(e, c.code)}>
+              <div key={c.code} className="card" draggable onDragStart={e => handleDragStart(e, c.code)} role="listitem">
                 <strong>{c.code}</strong> {c.title}
                 <div style={{ marginTop:6 }}>
                   <small>{c.description}</small>
@@ -232,12 +246,13 @@ export default function Planner(){
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="planner-sems">
-          <div className="semesters-grid two-columns">
+        <section className="planner-sems" aria-labelledby="semesters-heading">
+          <h3 id="semesters-heading" className="sr-only">Your Semester Plan</h3>
+          <div className="semesters-grid two-columns" role="list" aria-label="Semester plan grid">
           {semesters.map(sem => (
-            <div key={sem.id} className="card" style={{ minWidth: 240 }} onDragOver={allowDrop} onDrop={e => handleDropOnSemester(e as unknown as React.DragEvent, sem.id)}>
+            <div key={sem.id} className="card" style={{ minWidth: 240 }} onDragOver={allowDrop} onDrop={e => handleDropOnSemester(e as unknown as React.DragEvent, sem.id)} role="listitem" aria-label={`${sem.name} semester`}>
               <strong>{sem.name}</strong>
               <div style={{ fontSize: 12, color: '#666' }}>
                 {/* compute semester credits */}
@@ -285,9 +300,15 @@ export default function Planner(){
       </div>
 
       {warningToast && ciFlags.uiRedesign && (
-        <div className="toast warning">
+        <div className="toast warning" role="alert" aria-live="polite">
           <strong>⚠️ Prerequisite Warning</strong>
           <p style={{ margin: '4px 0 0 0', fontSize: 14 }}>{warningToast}</p>
+        </div>
+      )}
+      {successToast && ciFlags.uiRedesign && (
+        <div className="toast success" role="status" aria-live="polite">
+          <strong>✓ Success</strong>
+          <p style={{ margin: '4px 0 0 0', fontSize: 14 }}>{successToast}</p>
         </div>
       )}
     </div>

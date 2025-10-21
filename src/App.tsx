@@ -44,7 +44,7 @@ export default function App() {
         </nav>
       </header>
 
-      <main>
+      <main role="main" aria-label={`${tab === 'tracks' ? 'Courses' : tab === 'planner' ? 'Planner' : tab === 'scholarships' ? 'Scholarships' : 'Clubs & Events'} section`}>
         {tab === 'tracks' && <Tracks />}
         {tab === 'scholarships' && <Scholarships />}
         {tab === 'clubs' && <ClubsEvents />}
