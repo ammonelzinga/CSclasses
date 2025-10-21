@@ -3,7 +3,10 @@
     "allow": [
       "Bash(git checkout:*)",
       "Bash(npm run build:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: CI redesign with visual system, planner UX, interest filter, and catalog links\n\nThis commit implements comprehensive improvements based on contextual inquiry findings:\n\nUI Redesign:\n- Added sticky header with tab-based navigation\n- Implemented BYU-style design system with CSS tokens (blue brand colors, modern shadows, spacing)\n- Added responsive layout with improved visual hierarchy\n- All components now use redesigned card system with enhanced readability\n\nCourse Discovery:\n- Added interest filter to search by topics (graphics, AI, data, systems)\n- Implemented \"Open in Catalog\" buttons linking to BYU course catalog\n- Added CS 240 test requirement badges on 300+ level CS courses\n- Enhanced course cards with level, credits, and better typography\n\nPlanner Enhancements:\n- Added prerequisite warning toast when placing 300+ courses before CS 240\n- Improved semester grid layout (two columns on desktop, responsive on mobile)\n- Added tip about importing/exporting plans for advisors\n- Maintains existing drag-and-drop functionality\n\nEvents & Scholarships:\n- Events now have clickable titles with summaries and dates\n- Scholarships display individual \"Apply Now\" buttons\n- Added \"Application link pending\" message for scholarships without URLs\n- Improved layout and visual hierarchy\n\nQuality Assurance:\n- Created link checker script (npm run check:links)\n- All external links verified and working\n- Build passes successfully with no errors\n- Feature flags allow easy rollback via ciFlags.ts\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)"
     ],
     "deny": [],
     "ask": []
