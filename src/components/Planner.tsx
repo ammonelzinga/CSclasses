@@ -3,6 +3,9 @@ import { courses, CourseFull } from '../data/courses'
 import { tracks } from '../data/tracks'
 import { ciFlags } from '../config/ciFlags'
 import { catalogCourseUrl } from '../utils/externalLinks'
+import { CourseCard } from './planner/CourseCard'
+import { SemesterCard } from './planner/SemesterCard'
+import { PlannerControls } from './planner/PlannerControls'
 
 type Semester = {
   id: string
@@ -203,6 +206,16 @@ export default function Planner(){
     setSemesters(sems)
   }
 
+  const totalCredits = semesters.reduce(
+    (acc, sem) => acc + sem.courses.reduce((a, code) => a + (courses.find(c => c.code === code)?.credits ?? 3), 0),
+    0
+  )
+
+  function clearPlan() {
+    localStorage.removeItem(STORAGE_KEY)
+    setSemesters([])
+  }
+
   return (
     <div className="container">
       <h2>Semester Planner (Drag & Drop)</h2>
@@ -213,37 +226,20 @@ export default function Planner(){
         </p>
       )}
 
-      <div style={{ marginBottom: 12 }}>
-        <label>Choose a recommended track: </label>
-        <select onChange={e => applyPreset(e.target.value)} defaultValue="">
-          <option value="">-- Select track to preset 8-semester plan --</option>
-          <option value="byu-animation-games-2024">Animation & Games (2024–2025)</option>
-          <option value="byu-flowchart-2022">BYU CS Flowchart (2022–2023)</option>
-          {tracks.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-        </select>
-        <button onClick={() => { localStorage.removeItem(STORAGE_KEY); setSemesters([]) }} style={{ marginLeft:8 }}>Clear Plan</button>
-        <button onClick={exportPlan} style={{ marginLeft:8 }}>Export JSON</button>
-        <label style={{ marginLeft:8 }}>
-          Import JSON <input type="file" accept="application/json" onChange={importPlan} />
-        </label>
-      </div>
-
-      <div style={{ marginBottom: 12 }}>
-        <strong>Total planned credits: </strong>
-        {semesters.reduce((acc, sem) => acc + sem.courses.reduce((a, code) => a + (courses.find(c => c.code === code)?.credits ?? 3), 0), 0)}
-      </div>
+      <PlannerControls
+        onPresetSelect={applyPreset}
+        onClearPlan={clearPlan}
+        onExport={exportPlan}
+        onImport={importPlan}
+        totalCredits={totalCredits}
+      />
 
       <div className="planner-layout">
         <section className="planner-available" aria-labelledby="available-courses-heading">
           <h3 id="available-courses-heading">Available Courses</h3>
           <div style={{ maxHeight: 700, overflow: 'auto' }} role="list" aria-label="Available courses to add to semesters">
             {courses.map(c => (
-              <div key={c.code} className="card" draggable onDragStart={e => handleDragStart(e, c.code)} role="listitem">
-                <strong>{c.code}</strong> {c.title}
-                <div style={{ marginTop:6 }}>
-                  <small>{c.description}</small>
-                </div>
-              </div>
+              <CourseCard key={c.code} course={c} onDragStart={handleDragStart} />
             ))}
           </div>
         </section>
@@ -251,52 +247,20 @@ export default function Planner(){
         <section className="planner-sems" aria-labelledby="semesters-heading">
           <h3 id="semesters-heading" className="sr-only">Your Semester Plan</h3>
           <div className="semesters-grid two-columns" role="list" aria-label="Semester plan grid">
-          {semesters.map(sem => (
-            <div key={sem.id} className="card" style={{ minWidth: 240 }} onDragOver={allowDrop} onDrop={e => handleDropOnSemester(e as unknown as React.DragEvent, sem.id)} role="listitem" aria-label={`${sem.name} semester`}>
-              <strong>{sem.name}</strong>
-              <div style={{ fontSize: 12, color: '#666' }}>
-                {/* compute semester credits */}
-                {(() => {
-                  const total = sem.courses.reduce((acc, code) => {
-                    const c = courses.find(x => x.code === code)
-                    return acc + (c?.credits ?? 3)
-                  }, 0)
-                  return <span>Credits: {total}</span>
-                })()}
-              </div>
-              <div className="sem-controls" style={{ marginTop:8 }}>
-                <select onChange={e => { if(e.target.value) addCourseToSemester(sem.id, e.target.value) }}>
-                  <option value="">-- Add course --</option>
-                  {courses.map(c => <option key={c.code} value={c.code}>{c.code} — {c.title}</option>)}
-                </select>
-                <button onClick={() => deleteSemester(sem.id)} style={{ marginLeft:8 }}>Delete</button>
-              </div>
-
-              <ul>
-                {sem.courses.map(code => {
-                  const detail = courses.find(x => x.code === code)
-                  return (
-                    <li key={code} draggable onDragStart={e => handleDragStart(e, code, sem.id)} style={{ marginBottom:6 }}>
-                      {code} — {detail?.title}
-                      <button onClick={() => removeCourseFromSemester(sem.id, code)} style={{ marginLeft:8 }}>Remove</button>
-                    </li>
-                  )
-                })}
-              </ul>
-              {/* warning if overloaded/underloaded */}
-              {(() => {
-                const total = sem.courses.reduce((acc, code) => {
-                  const c = courses.find(x => x.code === code)
-                  return acc + (c?.credits ?? 3)
-                }, 0)
-                if (total > MAX_CREDITS) return <div style={{ color: 'red' }}>Warning: heavy load ({total} credits)</div>
-                if (total > 0 && total < MIN_CREDITS) return <div style={{ color: 'orange' }}>Warning: light load ({total} credits)</div>
-                return null
-              })()}
-            </div>
-          ))}
+            {semesters.map(sem => (
+              <SemesterCard
+                key={sem.id}
+                semester={sem}
+                onAddCourse={addCourseToSemester}
+                onRemoveCourse={removeCourseFromSemester}
+                onDelete={deleteSemester}
+                onDragStart={handleDragStart}
+                onDragOver={allowDrop}
+                onDrop={handleDropOnSemester}
+              />
+            ))}
           </div>
-        </div>
+        </section>
       </div>
 
       {warningToast && ciFlags.uiRedesign && (
