@@ -9,6 +9,7 @@ interface CourseCardProps {
 
 /**
  * Displays a single course card with drag-and-drop support
+ * Includes keyboard accessibility for draggable items
  */
 export function CourseCard({ course, onDragStart, isDraggable = true }: CourseCardProps) {
   return (
@@ -17,6 +18,8 @@ export function CourseCard({ course, onDragStart, isDraggable = true }: CourseCa
       draggable={isDraggable}
       onDragStart={e => onDragStart(e, course.code)}
       role="listitem"
+      tabIndex={isDraggable ? 0 : undefined}
+      aria-label={`${course.code} - ${course.title}. ${isDraggable ? 'Draggable' : ''}`}
     >
       <strong>{course.code}</strong> {course.title}
       <div style={{ marginTop: 6 }}>

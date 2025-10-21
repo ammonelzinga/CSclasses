@@ -74,6 +74,8 @@ export function SemesterCard({
               draggable
               onDragStart={e => onDragStart(e, code, semester.id)}
               style={{ marginBottom: 6 }}
+              tabIndex={0}
+              aria-label={`${code} - ${detail?.title}. Press space to move`}
             >
               {code} — {detail?.title}
               <button onClick={() => onRemoveCourse(semester.id, code)} style={{ marginLeft: 8 }}>
