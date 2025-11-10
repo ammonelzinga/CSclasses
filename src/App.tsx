@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import Tracks from './components/Tracks'
 import Scholarships from './components/Scholarships'
 import ClubsEvents from './components/ClubsEvents'
-import Planner from './components/Planner'
+import CoursesPlanner from './components/CoursesPlanner'
 import { ciFlags } from './config/ciFlags'
 
 export default function App() {
-  const [tab, setTab] = useState<'tracks'|'scholarships'|'clubs'|'planner'>('planner')
+  const [tab, setTab] = useState<'courses'|'scholarships'|'clubs'>('courses')
 
   return (
     <div className={ciFlags.uiRedesign ? "app ui" : "app"}>
@@ -15,15 +15,8 @@ export default function App() {
         <nav className="tabbar">
           <button
             className="tab"
-            onClick={() => setTab('planner')}
-            aria-current={tab === 'planner' ? 'page' : undefined}
-          >
-            Planner
-          </button>
-          <button
-            className="tab"
-            onClick={() => setTab('tracks')}
-            aria-current={tab === 'tracks' ? 'page' : undefined}
+            onClick={() => setTab('courses')}
+            aria-current={tab === 'courses' ? 'page' : undefined}
           >
             Courses
           </button>
@@ -45,10 +38,9 @@ export default function App() {
       </header>
 
       <main>
-        {tab === 'tracks' && <Tracks />}
+        {tab === 'courses' && <CoursesPlanner />}
         {tab === 'scholarships' && <Scholarships />}
         {tab === 'clubs' && <ClubsEvents />}
-        {tab === 'planner' && <Planner />}
       </main>
 
       <footer>Built for BYU CS students — data sourced from cs.byu.edu and BYU Catalog</footer>

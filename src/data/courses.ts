@@ -8,26 +8,26 @@ export type CourseFull = {
 // Default credit assignment: 3 credits for most courses; adjust as needed.
 export const courses: CourseFull[] = [
   { code: 'CS 110', title: 'How to Program', description: 'Introduction to programming and computer science for those with no prior programming experience. Focuses on the basic aspects of programming, with an emphasis on core principles. Labs provide a supportive environment to learn how to program with peer...', credits: 3 },
-  { code: 'CS 111', title: 'Introduction to Computer Science', description: 'Teaches how to design, develop, reason about, and test programs. Topics include higher-order functions, object-oriented programming, recursion, algorithms, data structures, decomposition, interpreters, and regular expressions.' },
+  { code: 'CS 111', title: 'Introduction to Computer Science', description: 'Teaches how to design, develop, reason about, and test programs. Topics include higher-order functions, object-oriented programming, recursion, algorithms, data structures, decomposition, interpreters, and regular expressions.', credits: 3 },
   { code: 'CS 142', title: 'Introduction to Computer Programming', description: 'Introduction to object-oriented program design and development. Principles of algorithm formulation and implementation.' },
   { code: 'CS 180', title: 'Introduction to Data Science', description: 'A broad, interdisciplinary look at data science, developing technical skills (including some python programming, statistics, linear algebra, machine learning, data cleaning and visualization).' },
-  { code: 'CS 191', title: 'Exploring Computer Science', description: 'Introduction to the discipline of computer science and its fields.' },
+  { code: 'CS 191', title: 'Exploring Computer Science', description: 'Introduction to the discipline of computer science and its fields.', credits: 0.5 },
   { code: 'CS 199R', title: 'Academic Internship', description: 'Internships or cooperative education experiences with organizations outside BYU.' },
   { code: 'CS 201R', title: 'Topics in Computer Science', description: 'Undergraduate level subjects as announced before each semester.' },
   { code: 'CS 202', title: 'Software Engineering Lab 1', description: 'The first of three experiential learning labs that will provide students with hands-on experience with various tools, technologies, and techniques that software engineers use in practice.' },
   { code: 'CS 203', title: 'Software Engineering Lab 2', description: 'The second of three experiential learning labs building on those learned in previous lab.' },
   { code: 'CS 204', title: 'Software Engineering Lab 3', description: 'The third of three experiential learning labs building on those learned in previous labs.' },
-  { code: 'CS 224', title: 'Introduction to Computer Systems', description: 'How a computer works to execute sequential code: low level data representation and abstraction, relationship between C and assembly, architecture, memory hierarchy, dynamic memory allocation, and linking.' },
-  { code: 'CS 235', title: 'Data Structures and Algorithms', description: 'Fundamental data structures and algorithms of computer science; basic algorithm analysis; recursion; sorting and searching; lists, stacks, queues, trees, hashing; object-oriented data abstraction.' },
-  { code: 'CS 236', title: 'Discrete Structures', description: 'Introduction to grammars and parsing; predicate and propositional logic; proof techniques; sets, functions, relations, relational data model; graphs and graph algorithms.' },
-  { code: 'CS 240', title: 'Advanced Software Construction', description: 'Advanced software development with an object-oriented focus. Design, implementation, and testing of medium-sized programs including a server program.' },
+  { code: 'CS 224', title: 'Introduction to Computer Systems', description: 'How a computer works to execute sequential code: low level data representation and abstraction, relationship between C and assembly, architecture, memory hierarchy, dynamic memory allocation, and linking.', credits: 3 },
+  { code: 'CS 235', title: 'Data Structures and Algorithms', description: 'Fundamental data structures and algorithms of computer science; basic algorithm analysis; recursion; sorting and searching; lists, stacks, queues, trees, hashing; object-oriented data abstraction.', credits: 3 },
+  { code: 'CS 236', title: 'Discrete Structures', description: 'Introduction to grammars and parsing; predicate and propositional logic; proof techniques; sets, functions, relations, relational data model; graphs and graph algorithms.', credits: 3 },
+  { code: 'CS 240', title: 'Advanced Software Construction', description: 'Advanced software development with an object-oriented focus. Design, implementation, and testing of medium-sized programs including a server program.', credits: 4 },
   { code: 'CS 252', title: 'Introduction to Computational Theory', description: 'Finite state automata, regular languages, push-down automata, parsing, Turing machines, computability complexity, NP-completeness.' },
   { code: 'CS 256', title: 'Introduction to Human Computer Interaction', description: 'Design user experiences with technology. Methods to establish user needs, derive designs, assess tradeoffs, and report results. Develop and iterate prototypes with feedback.' },
   { code: 'CS 260', title: 'Web Programming', description: 'Introduction to building and deploying full stack web applications using core technologies, frameworks, protocols, and development tools.' },
-  { code: 'CS 270', title: 'Introduction to Machine Learning', description: 'Fundamental models of machine learning, such as neural networks, decision trees, clustering, Bayesian learning, ensembles, reinforcement learning, and deep learning.' },
-  { code: 'CS 291', title: 'Careers in Computer Science', description: 'Career advising for students in computer science. Advice on resumes, applications, and interviews for internships, jobs, and graduate school.' },
+  { code: 'CS 270', title: 'Introduction to Machine Learning', description: 'Fundamental models of machine learning, such as neural networks, decision trees, clustering, Bayesian learning, ensembles, reinforcement learning, and deep learning.', credits: 3 },
+  { code: 'CS 291', title: 'Careers in Computer Science', description: 'Career advising for students in computer science. Advice on resumes, applications, and interviews for internships, jobs, and graduate school.', credits: 0.5 },
   { code: 'CS 301R', title: 'Topics in Computer Science', description: 'Undergraduate-level topics as announced.' },
-  { code: 'CS 312', title: 'Algorithm Design and Analysis', description: 'Design and analysis of algorithms as solutions to problems including dynamic programming, greedy algorithms, divide-and-conquer, graph algorithms, and intelligent search algorithms.' },
+  { code: 'CS 312', title: 'Algorithm Design and Analysis', description: 'Design and analysis of algorithms as solutions to problems including dynamic programming, greedy algorithms, divide-and-conquer, graph algorithms, and intelligent search algorithms.', credits: 3 },
   { code: 'CS 324', title: 'Systems Programming', description: 'Systems programming principles: Linux systems programming, multiprocessing, concurrency, exceptional control flow, caching, sockets, protocols, and non-blocking I/O.' },
   { code: 'CS 329', title: 'Quality Assurance and Developer Operations', description: 'Production software testing, deployment, and management strategies, focusing on automation, security, CI/CD, scalability, and resilience.' },
   { code: 'CS 330', title: 'Concepts of Programming Languages', description: 'Principles and concepts characterizing high-level programming languages, functional programming, logic programming, scanners, and parsers.' },
@@ -37,7 +37,7 @@ export const courses: CourseFull[] = [
   { code: 'CS 356', title: 'Advanced Techniques in Human Computer Interaction', description: 'Designing the user experience and implementing technology; website design, information architecture, design for broader ecosystems, prototyping and feedback.' },
   { code: 'CS 393', title: 'Collaborative Problem Solving', description: 'Strengthen problem-solving skills through targeted practice to prepare for technical/coding interviews.' },
   { code: 'CS 401R', title: 'Topics in Computer Science', description: 'Undergraduate level subjects as announced before each semester.' },
-  { code: 'CS 404', title: 'Ethics and Computers in Society', description: 'Societal impact of computer technology, ethical issues; reading, discussion, and writing seminar.' },
+  { code: 'CS 404', title: 'Ethics and Computers in Society', description: 'Societal impact of computer technology, ethical issues; reading, discussion, and writing seminar.', credits: 2 },
   { code: 'CS 405', title: 'Creating and Managing a Software Business', description: 'Entrepreneurship, product development, marketing/sales, customer support, fund raising, and effective management.' },
   { code: 'CS 412', title: 'Linear Programming and Convex Optimization', description: 'Optimization, problem formulation, and solution algorithms, with applications in control, data mining, finance, game theory, and learning.' },
   { code: 'CS 416', title: 'Advanced Algorithms', description: 'Advanced algorithms and problem solving: combinatorics, prime number theory, network flow, computational geometry, randomized algorithms, advanced DP.' },
@@ -100,4 +100,31 @@ export const courses: CourseFull[] = [
   { code: 'CSANM 494R', title: 'Special Problems in Animation', description: 'Individual study in area of special interest.' },
   { code: 'CSANM 497R', title: 'BFA Final Project', description: 'Advanced individual project showing competence within chosen major.' },
   { code: 'STAT 180', title: 'Introduction to Data Science', description: 'Statistics; linear algebra; ML; data cleaning and visualization; data literacy.', credits: 3 }
+  ,{ code: 'MATH 112', title: 'Calculus 1', description: 'Differential and integral calculus of one variable.', credits: 4 }
+  ,{ code: 'MATH 113', title: 'Calculus 2', description: 'Continuation of Calculus 1: techniques of integration, series.', credits: 4 }
+  ,{ code: 'MATH 213', title: 'Elementary Linear Algebra', description: 'Matrices, systems of equations, vector spaces, determinants.', credits: 2 }
+  ,{ code: 'MATH 215', title: 'Computational Linear Algebra', description: 'Applied linear algebra computations.', credits: 1 }
+  ,{ code: 'MATH 290', title: 'Fundamentals of Mathematics', description: 'Proof techniques and fundamental structures.', credits: 3 }
+  ,{ code: 'MATH 431', title: 'Probability Theory', description: 'Mathematical theory of probability.', credits: 3 }
+  ,{ code: 'STAT 121', title: 'Intro to Statistical Data Analysis', description: 'Introduction to statistics for data analysis.', credits: 3 }
+  ,{ code: 'STAT 201', title: 'Statistics for Engineers & Scientists', description: 'Applied statistics for engineering and science contexts.', credits: 3 }
+  ,{ code: 'STAT 220', title: 'Stat Modeling for Data Science', description: 'Statistical modeling techniques in data science.', credits: 3 }
+  ,{ code: 'PHSCS 121', title: 'Intro to Newtonian Mechanics', description: 'Fundamental principles of mechanics.', credits: 3 }
+  ,{ code: 'WRTG 316', title: 'Technical Communication', description: 'Professional and technical writing.', credits: 3 }
+  ,{ code: 'EC EN 220', title: 'Fund of Digital Systems', description: 'Digital logic and system fundamentals.', credits: 3 }
+  ,{ code: 'EC EN 330', title: 'Intro Embedded Programming', description: 'Embedded system programming principles.', credits: 4 }
+  ,{ code: 'EC EN 427', title: 'Embedded Systems', description: 'Advanced embedded system design.', credits: 4 }
+  ,{ code: 'IS 567', title: 'Cybersecurity & Pen Testing', description: 'Cybersecurity principles and penetration testing.', credits: 3 }
+  ,{ code: 'MATH 485', title: 'Mathematical Cryptography', description: 'Mathematics behind cryptographic systems.', credits: 3 }
+  ,{ code: 'BIO 130', title: 'Biology', description: 'Foundational principles of biology: cells, genetics, evolution, ecology.', credits: 4 }
+  ,{ code: 'BIO 165', title: 'Introduction to Bioinformatics', description: 'Overview of bioinformatics concepts, tools, and data analysis techniques.', credits: 3 }
+  ,{ code: 'BIO 264', title: 'Stat Analysis for Biologists', description: 'Statistics methods applied to biological data.', credits: 4 }
+  ,{ code: 'BIO 364', title: 'Bioinformatics Algorithms', description: 'Algorithms used in bioinformatics: sequence alignment, clustering, phylogenetics.', credits: 3 }
+  ,{ code: 'BIO 465', title: 'Capstone in Bioinformatics', description: 'Team-based capstone applying bioinformatics methods to real datasets.', credits: 3 }
+  ,{ code: 'MMBIO 240', title: 'Molecular Biology', description: 'Molecular mechanisms governing cells and organisms.', credits: 3 }
+  ,{ code: 'PWS 340', title: 'Genetics', description: 'Principles of heredity and genetic analysis.', credits: 3 }
+  ,{ code: 'CHEM 105', title: 'Gen College Chem 1+Lab Integr', description: 'General chemistry with integrated laboratory.', credits: 4 }
+  ,{ code: 'BIO 250', title: 'Evolutionary Medicine', description: 'Evolutionary principles in the context of human health and disease.', credits: 2 }
+  ,{ code: 'BIO 420', title: 'Evolutionary Biology', description: 'Advanced study of evolutionary mechanisms and patterns.', credits: 4 }
+  ,{ code: 'BIO 463', title: 'Genetics of Human Disease', description: 'Genetic basis of human diseases and analysis approaches.', credits: 3 }
 ]
