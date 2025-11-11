@@ -64,8 +64,7 @@ function RequirementSection({ id, name, courses: courseList, expanded, toggle, h
                   className={`course-card ${emphasized ? 'emphasis' : ''}`}
                   onToggle={(e) => {
                     const el = e.currentTarget
-                    if(!el.open) return // only act on open
-                    // Determine row by vertical midpoint and expand all details whose midpoint matches within threshold
+                    // Determine row by vertical midpoint and affect all details whose midpoint matches within threshold
                     const rect = el.getBoundingClientRect()
                     const midY = rect.top + rect.height/2
                     const parent = el.parentElement
@@ -77,7 +76,7 @@ function RequirementSection({ id, name, courses: courseList, expanded, toggle, h
                       const r = sib.getBoundingClientRect()
                       const sibMid = r.top + r.height/2
                       if(Math.abs(sibMid - midY) <= threshold){
-                        sib.open = true
+                        sib.open = el.open
                       }
                     })
                   }}
@@ -88,7 +87,7 @@ function RequirementSection({ id, name, courses: courseList, expanded, toggle, h
                       <span className="title">{c.title}</span>
                     </div>
                     <div className="meta" style={{ display:'flex', alignItems:'center', gap:8 }}>
-                      <span>{credits} cr</span>
+                      <span>{credits}</span>
                       <button
                         className="drag-handle"
                         title="Drag to planner"
@@ -219,7 +218,7 @@ export default function CoursesPlanner(){
       map[cat].push(c)
     }
     return map
-  }, [filtered, groupMode])
+  }, [filtered, groupMode, emphasis])
 
   // Sort categories: emphasis-highlighted first (if selected)
   const orderedCategories = useMemo(() => {
@@ -270,11 +269,11 @@ export default function CoursesPlanner(){
     }
     const orderedCodes = [...codes].sort((a,b) => levelOf(a) - levelOf(b))
 
-    // Constraints: aim for about 6–9 CS credits per semester; keep total near 15
+  // Constraints: aim for about 6–9 CS credits per semester; cap total at 9 to leave room for GEs
     const CS_PREFIXES = new Set(['CS','CSANM'])
     const csMaxPerSem = 9
     const csMinPreferred = 6
-    const totalMaxPerSem = 15
+  const totalMaxPerSem = 9
 
     const getCredits = (code:string) => courses.find(c=>c.code===code)?.credits ?? 3
     const isCs = (code:string) => CS_PREFIXES.has((code.split(' ')[0]||'').toUpperCase())
@@ -345,8 +344,13 @@ export default function CoursesPlanner(){
       <div className="top-bar">
         <div className="left-tools">
           <h2>BYU CS Courses</h2>
+          <div style={{fontSize:12, lineHeight:1.4, maxWidth:680, color:'#444', marginTop:4}}>
+            Browse all Computer Science and Bioinformatics-related courses. Use the Emphasis selector to highlight emphasis-specific classes.
+            Drag courses into the planner (right) to build an 8-semester path. Typically students pair 6–9 CS credits with other GE classes each term.
+            A CS 240 flag (completion of CS 240) is required before enrolling in 300-level+ CS courses (except explicitly noted exceptions). Plan CS 240 early.
+          </div>
           <input placeholder="Search courses" value={query} onChange={e => setQuery(e.target.value)} />
-          <select value={emphasis} onChange={e => setEmphasis(e.target.value)}>
+          <select value={emphasis} onChange={e => setEmphasis(e.target.value)} style={{ marginRight:12, marginLeft:12, padding:'8px 10px' }}>
             <option value="">All Emphases</option>
             <option value="animation-games">Animation & Games</option>
             <option value="software-engineering">Software Engineering</option>
@@ -360,7 +364,7 @@ export default function CoursesPlanner(){
           </select>
         </div>
         <div className="right-tools">
-          <button onClick={() => setShowPlanner(s => !s)}>{showPlanner ? 'Hide Planner' : 'View Planner'}</button>
+          <button className="btn-primary" onClick={() => setShowPlanner(s => !s)}>{showPlanner ? 'Hide Planner' : 'View Planner'}</button>
         </div>
       </div>
 

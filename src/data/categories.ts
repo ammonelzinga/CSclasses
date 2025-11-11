@@ -13,6 +13,15 @@ export const categories: Category[] = [
   { id: 'net-dist', name: 'Networks & Distributed Systems' },
   { id: 'capstone', name: 'Capstones' },
   { id: 'bioinfo', name: 'Bioinformatics' },
+  { id: 'math-stats', name: 'Math & Statistics' },
+  { id: 'nat-sci', name: 'Physics & Chemistry' },
+  { id: 'comm', name: 'Writing & Communication' },
+  { id: 'ece', name: 'Electrical & Computer Eng' },
+  { id: 'is', name: 'Information Systems' },
+  { id: 'orientation', name: 'Orientation & Foundations' },
+  { id: 'labs', name: 'SE Labs & Practicum' },
+  { id: 'career-business', name: 'Career & Business' },
+  { id: 'topics-research', name: 'Topics & Research' },
   { id: 'other', name: 'Other' }
 ]
 
@@ -56,10 +65,37 @@ export function categorizeCourse(code: string): string {
   // Capstones
   if (prefix==='CS' && [480,481,494,495].includes(num)) return 'capstone'
 
+  // Orientation & Foundations
+  if (['CS 110','CS 191','CS 199R','CS 291'].includes(code)) return 'orientation'
+
+  // SE Labs & Practicum
+  if (['CS 202','CS 203','CS 204'].includes(code)) return 'labs'
+
+  // Career & Business
+  if (['CS 405','CS 500','CS 502'].includes(code)) return 'career-business'
+
+  // Topics & Research (includes advanced topics / research-centric)
+  if (['CS 401R','CS 501R','CS 513','CS 556','CS 574','CS 575','CS 580'].includes(code)) return 'topics-research'
+
   // Bioinformatics courses (BIO/MMBIO/PWS core and related options)
   if (prefix==='BIO' && ['BIO 130','BIO 165','BIO 264','BIO 364','BIO 465','BIO 250','BIO 420','BIO 463'].includes(code)) return 'bioinfo'
   if (code==='MMBIO 240') return 'bioinfo'
   if (code==='PWS 340') return 'bioinfo'
+
+  // Math & Statistics
+  if (prefix==='MATH' || prefix==='STAT') return 'math-stats'
+
+  // Physics & Chemistry
+  if (prefix==='PHSCS' || prefix==='CHEM') return 'nat-sci'
+
+  // Writing & Communication
+  if (prefix==='WRTG') return 'comm'
+
+  // Electrical & Computer Engineering
+  if (prefix==='EC' && code.startsWith('EC EN')) return 'ece'
+
+  // Information Systems
+  if (prefix==='IS') return 'is'
 
   return 'other'
 }
