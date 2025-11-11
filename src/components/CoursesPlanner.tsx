@@ -19,7 +19,7 @@ const emphasisHighlightCodes: Record<string,string[]> = {
 
 // 2) Which courses to seed into the planner when applying an emphasis plan
 const emphasisPlanCodes: Record<string,string[]> = {
-  'animation-games': ['CS 142','CS 111','CS 235','CS 236','CS 224','CS 240','CS 312','CS 330','CS 355','CSANM 340','CS 455','CSANM 342','CSANM 459','CS 324','CSANM 460','CS 404'],
+  'animation-games': ['CS 142','CS 111','CS 235','DESAN 101','CSANM 150','CS 236','CS 224','CS 240','CS 312','CS 330','CS 355','CSANM 340','CS 455','CSANM 342','CSANM 459','CS 324','CSANM 460','CS 404'],
   'software-engineering': ['CS 142','CS 111','CS 235','CS 236','CS 224','CS 240','CS 312','CS 330','CS 329','CS 340','CS 428','CS 480','CS 481','CS 404'],
   'machine-learning': ['CS 142','CS 111','CS 235','CS 236','CS 224','CS 240','CS 312','CS 330','CS 270','CS 470','CS 472','CS 473','CS 474','CS 404'],
   // Bioinformatics full requirements (defaults chosen for options):
@@ -123,7 +123,7 @@ function PlannerSidebar({ semesters, setSemesters, close, onDropToSemester, emph
   return (
     <aside className="planner-sidebar" aria-label="Planner">
       <div className="sidebar-header">
-        <h3>Planner</h3>
+        <h3>My Plan</h3>
         <button onClick={close} className="close-btn" aria-label="Close planner">×</button>
       </div>
       <div style={{ fontSize:12, color:'#666', marginBottom:8 }}>Drag courses into semesters</div>
@@ -267,7 +267,17 @@ export default function CoursesPlanner(){
       const n = parseInt(parts[1]||'0',10)
       return isNaN(n) ? 0 : n
     }
-    const orderedCodes = [...codes].sort((a,b) => levelOf(a) - levelOf(b))
+    let orderedCodes = [...codes].sort((a,b) => levelOf(a) - levelOf(b))
+    if(emphasis === 'animation-games'){
+      const priority = ['CS 111','CS 235','DESAN 101','CSANM 150']
+      const prSet = new Set(priority)
+      const rest = orderedCodes.filter(c => !prSet.has(c))
+      orderedCodes = [...priority.filter(c => codes.includes(c)), ...rest]
+      // Ensure these priority courses land in the first two semesters before distribution logic spreads others
+      const firstTwo = orderedCodes.filter(c => prSet.has(c))
+      const remaining = orderedCodes.filter(c => !prSet.has(c))
+      orderedCodes = [...firstTwo, ...remaining]
+    }
 
   // Constraints: aim for about 6–9 CS credits per semester; cap total at 9 to leave room for GEs
     const CS_PREFIXES = new Set(['CS','CSANM'])
@@ -344,11 +354,24 @@ export default function CoursesPlanner(){
       <div className="top-bar">
         <div className="left-tools">
           <h2>BYU CS Courses</h2>
-          <div style={{fontSize:12, lineHeight:1.4, maxWidth:680, color:'#444', marginTop:4}}>
-            Browse all Computer Science and Bioinformatics-related courses. Use the Emphasis selector to highlight emphasis-specific classes.
-            Drag courses into the planner (right) to build an 8-semester path. Typically students pair 6–9 CS credits with other GE classes each term.
-            A CS 240 flag (completion of CS 240) is required before enrolling in 300-level+ CS courses (except explicitly noted exceptions). Plan CS 240 early.
+          <div className="courses-intro">
+            <p>
+              Browse all Computer Science courses. Use the Emphasis selector to highlight emphasis-specific classes. Drag courses into the planner (right) to build an 8-semester path. Students usually pair 6–9 CS credits with GE classes each term.
+            </p>
+            <p>
+              You must earn the CS 240 flag (finish CS 240) before taking most 300+ level CS courses. Plan CS 240 early so upper-division scheduling stays flexible.
+            </p>
           </div>
+          {emphasis === 'animation-games' && (
+            <div className="courses-intro emphasis-note">
+              <p>
+                <strong>Animation & Games Emphasis Admission:</strong> Limited-enrollment emphasis. You must be enrolled in the prerequisite courses (CS 111, CS 235, DESAN 101, and CSANM 150) to apply. You may apply while taking a prerequisite (select "currently enrolled" for its grade; advisors verify after grades post). For questions contact Lynnette Nelson (lnelson@cs.byu.edu).
+              </p>
+              <p>
+                Application deadlines: <strong>April 30</strong> and <strong>December 15</strong> at 11:59 p.m.
+              </p>
+            </div>
+          )}
           <input placeholder="Search courses" value={query} onChange={e => setQuery(e.target.value)} />
           <select value={emphasis} onChange={e => setEmphasis(e.target.value)} style={{ marginRight:12, marginLeft:12, padding:'8px 10px' }}>
             <option value="">All Emphases</option>
@@ -364,7 +387,7 @@ export default function CoursesPlanner(){
           </select>
         </div>
         <div className="right-tools">
-          <button className="btn-primary" onClick={() => setShowPlanner(s => !s)}>{showPlanner ? 'Hide Planner' : 'View Planner'}</button>
+          <button className="btn-primary" onClick={() => setShowPlanner(s => !s)}>{showPlanner ? 'Hide My Plan' : 'My Plan'}</button>
         </div>
       </div>
 

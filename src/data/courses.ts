@@ -79,6 +79,7 @@ export const courses: CourseFull[] = [
   { code: 'CS 575', title: 'Introduction to Graph Data Science', description: 'Using graph structures to explore labeled data, community detection, and graph models.' },
   { code: 'CS 580', title: 'Theory of Predictive Modeling', description: 'Foundations of machine learning, control, and physical modeling; causality and uncertainty.' },
   { code: 'CSANM 150', title: 'Introduction to Three-Dimensional Computer Graphics', description: 'Fundamentals of modeling, texturing, lighting, and rendering.' },
+  { code: 'DESAN 101', title: 'Introduction to Design and Animation', description: 'Foundational principles of design and animation including visual storytelling, composition, timing, and an introduction to industry tools and workflows.', credits: 3 },
   { code: 'CSANM 210', title: 'Visual Narrative for Animation', description: 'Foundational skills for animation: cinematography, layout, composition, and storytelling.' },
   { code: 'CSANM 250', title: 'Intermediate Three-Dimensional Computer Graphics', description: 'Fundamentals of building 3D models and setting up model rigs.' },
   { code: 'CSANM 252', title: 'Introduction to Three-Dimensional Animation', description: 'Principles and techniques of 3D animation including timing, pacing, and character setup.' },

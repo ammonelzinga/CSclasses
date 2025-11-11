@@ -52,6 +52,7 @@ export function categorizeCourse(code: string): string {
   // Graphics / Animation / Games
   if (prefix==='CS' && [355,455].includes(num)) return 'graphics'
   if (prefix==='CSANM') return 'graphics'
+  if (prefix==='DESAN') return 'graphics'
 
   // HCI
   if (prefix==='CS' && [256,356,456].includes(num)) return 'hci'

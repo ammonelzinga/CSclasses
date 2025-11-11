@@ -18,7 +18,7 @@ export default function App() {
             onClick={() => setTab('courses')}
             aria-current={tab === 'courses' ? 'page' : undefined}
           >
-            Courses
+            Classes
           </button>
           <button
             className="tab"
